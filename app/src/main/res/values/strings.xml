@@ -8,4 +8,22 @@
     <string name="hint_password">Mật khẩu</string>
     <string name="btn_text_Login">Đăng nhập</string>
     <string name="snappy_express">Snappy Express</string>
+    <string name="fb_login_text">Đăng nhập Facebook</string>
+    <string name="fb_logout_text">Đăng xuất</string>
+    <string name="access_token">access_token</string>
+    <string name="name">name</string>
+    <string name="hello">"Xin chào "</string>
+    <string name="fbId">fbId</string>
+    <string name="first_name">first_name</string>
+    <string name="last_name">last_name</string>
+    <string name="email">email</string>
+    <string name="gender">gender</string>
+    <string name="birthday">birthday</string>
+    <string name="location">location</string>
+    <string name="profile_pic">profile_pic</string>
+    <string name="id">id</string>
+    <string name="cancel">Cancel</string>
+    <string name="scan_barcode">Quét mã</string>
+    <string name="transfer_address">Giao kho</string>
+    <string name="tracking_list">Danh sách đơn hàng</string>
 </resources>

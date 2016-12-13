@@ -24,8 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="@dimen/login_margin"
+            android:layout_marginRight="@dimen/login_margin"
             android:hint="@string/hint_email_phone_number"
             android:textAlignment="center"
             android:textSize="12sp" />
@@ -35,20 +35,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="@dimen/login_margin"
+            android:layout_marginRight="@dimen/login_margin"
             android:hint="@string/hint_password"
+            android:inputType="textPassword"
             android:textAlignment="center"
-            android:textSize="12sp"
-            android:inputType="textPassword" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="@dimen/login_margin"
+            android:layout_marginRight="@dimen/login_margin"
             android:text="@string/btn_text_Login"
             android:textAllCaps="false"
             android:textSize="14sp"
@@ -61,13 +61,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginTop="8dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            facebook:com_facebook_login_text="Đăng nhập Facebook"
-            facebook:com_facebook_logout_text="Đăng xuất" />
+            facebook:com_facebook_login_text="@string/fb_login_text"
+            facebook:com_facebook_logout_text="@string/fb_logout_text" />
     </LinearLayout>
 
 </RelativeLayout>

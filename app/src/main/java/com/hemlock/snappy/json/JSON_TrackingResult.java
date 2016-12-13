@@ -8,7 +8,7 @@ import com.hemlock.snappy.model.Tracking;
  * Created by lookonlyatme on 12/9/16.
  */
 
-public class JSON_Tracking {
+public class JSON_TrackingResult {
     @SerializedName("success")
     @Expose
     private Boolean success;
