@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/snappy_express"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txt_email_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="@string/hint_email_phone_number"
+            android:textAlignment="center"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/txt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="@string/hint_password"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/btn_text_Login"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:theme="@style/AppTheme.Button" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_login_fb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            facebook:com_facebook_login_text="Đăng nhập Facebook"
+            facebook:com_facebook_logout_text="Đăng xuất" />
+    </LinearLayout>
+
+</RelativeLayout>
