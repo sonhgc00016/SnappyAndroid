@@ -5,24 +5,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.facebook.login.LoginManager;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.hemlock.snappy.R;
 import com.hemlock.snappy.activities.MainActivity;
-import com.hemlock.snappy.json.JSON_TrackingResult;
-import com.hemlock.snappy.model.Tracking;
+import com.hemlock.snappy.json.JSON_AuthResult;
 import com.hemlock.snappy.network.ApiClient;
 import com.hemlock.snappy.network.ApiInterface;
+import com.hemlock.snappy.utils.Utils;
+import com.hemlock.snappy.zxing.CaptureActivityPortrait;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,8 +35,9 @@ import retrofit2.Response;
  */
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener, MainActivity.OnBackPressedListener {
-    private String name;
-    private LinearLayout linearLayout;
+    private String name, accessToken;
+    private ApiInterface apiService;
+    private  TextView tvName, tvMailmanBalance;
 
     @Nullable
     @Override
@@ -43,13 +46,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         name = sharedPref.getString(getString(R.string.name), getResources().getString(R.string.name));
+        accessToken = sharedPref.getString(getString(R.string.access_token), getResources().getString(R.string.access_token));
 
-        TextView tvName = (TextView) v.findViewById(R.id.tv_name);
-        tvName.setText(getString(R.string.hello) + " " + name);
+        tvName = (TextView) v.findViewById(R.id.tv_name);
+        tvMailmanBalance = (TextView) v.findViewById(R.id.tv_mailman_balance);
 
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.setOnBackPressedListener(this);
-        linearLayout = (LinearLayout) mainActivity.findViewById(R.id.activity_main);
 
         Button btnLogout = (Button) v.findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(this);
@@ -70,24 +73,33 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
+        tvName.setText(getString(R.string.hello) + " " + name);
+        apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        String accessToken = "";
-
-        Call<JSON_TrackingResult> call = apiService.showTracking("E80000763", accessToken);
-        call.enqueue(new Callback<JSON_TrackingResult>() {
+        Call<JSON_AuthResult> call = apiService.auth(accessToken);
+        startLoading();
+        call.enqueue(new Callback<JSON_AuthResult>() {
             @Override
-            public void onResponse(Call<JSON_TrackingResult> call, Response<JSON_TrackingResult> response) {
-                if (response.body().getSuccess()) {
-                    Tracking tracking = response.body().getTracking();
-                } else {
-                    Log.w(getClass().getSimpleName(), "Message: " + response.body().getMessage());
-                }
+            public void onResponse(Call<JSON_AuthResult> call, Response<JSON_AuthResult> response) {
+                stopLoading();
+                if (response.body() != null)
+                    if (response.body().getSuccess()) {
+                        tvMailmanBalance.setText(getString(R.string.maiman_balance) + " "
+                                + Utils.formatCurrency(getActivity(), response.body().getUser().getMailmanBalance()));
+                    } else {
+                        Utils.removeAllInSharedPref(getActivity());
+                        removeAllInBackStack();
+                        replaceFragment(new LoginFragment(), false);
+                        Log.w(getClass().getSimpleName(), "Message: " + response.body().getMessage());
+                    }
             }
 
             @Override
-            public void onFailure(Call<JSON_TrackingResult> call, Throwable t) {
+            public void onFailure(Call<JSON_AuthResult> call, Throwable t) {
+                stopLoading();
+                Utils.removeAllInSharedPref(getActivity());
+                removeAllInBackStack();
+                replaceFragment(new LoginFragment(), false);
                 Log.w(getClass().getSimpleName(), t.toString());
             }
         });
@@ -106,6 +118,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.btn_transfer_address:
                 break;
             case R.id.btn_tracking_list:
+                replaceFragment(new TrackingListFragment(), true);
                 break;
             default:
                 break;
@@ -113,28 +126,40 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void scanBarcode() {
-        IntentIntegrator integrator = new IntentIntegrator(getActivity());
-        integrator.initiateScan();
+        IntentIntegrator.forSupportFragment(this).setCaptureActivity(CaptureActivityPortrait.class).setOrientationLocked(true).initiateScan();
     }
 
     private void logout() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.remove(getString(R.string.name));
-        editor.remove(getString(R.string.access_token));
-        editor.apply();
-        LoginManager.getInstance().logOut();
+        Utils.removeAllInSharedPref(getActivity());
         removeAllInBackStack();
         replaceFragment(new LoginFragment(), true);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (scanResult != null) {
-            String re = scanResult.getContents();
-            Snackbar.make(linearLayout, re, Snackbar.LENGTH_LONG).show();
+            if (scanResult.getContents() == null) {
+                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Pattern p = Pattern.compile("(S|E)[0-9]{8,10}");
+                Matcher m = p.matcher(scanResult.getContents());
+                if(m.find()) {
+                    String trackingId = m.group(0);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getString(R.string.tracking_id), trackingId);
+                    bundle.putString(getString(R.string.access_token), accessToken);
+
+                    TrackingDetailsFragment trackingDetailsFragment = new TrackingDetailsFragment();
+                    trackingDetailsFragment.setArguments(bundle);
+
+                    replaceFragment(trackingDetailsFragment, true);
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.wrong_tracking_id), Toast.LENGTH_LONG).show();
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

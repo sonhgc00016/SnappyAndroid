@@ -7,5 +7,7 @@
     <color name="lightBlue400">#29B6F6</color>
     <color name="deepOrange500">#FF7043</color>
     <color name="purple500">#9C27B0</color>
+    <color name="trans50">#80FFFFFF</color>
+    <color name="trans80">#80000000</color>
 
 </resources>

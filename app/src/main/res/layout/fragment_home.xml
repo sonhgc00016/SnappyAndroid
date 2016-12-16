@@ -8,13 +8,26 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/hello"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_mailman_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="@string/maiman_balance"
         android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/lnl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_name"
+        android:layout_below="@+id/tv_mailman_balance"
         android:orientation="horizontal"
         android:weightSum="100">
 
@@ -25,7 +38,6 @@
             android:layout_margin="10dp"
             android:layout_weight="50"
             android:background="@color/deepOrange500"
-            android:paddingTop="0dp"
             android:text="@string/scan_barcode"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
@@ -48,9 +60,9 @@
 
     <Button
         android:id="@+id/btn_tracking_list"
-        android:layout_below="@+id/lnl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/lnl1"
         android:layout_margin="10dp"
         android:background="@color/lightBlue400"
         android:text="@string/tracking_list"

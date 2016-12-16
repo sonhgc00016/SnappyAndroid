@@ -24,6 +24,17 @@ public class User {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("mailman_balance")
+    @Expose
+    private int mailmanBalance;
+
+    public int getMailmanBalance() {
+        return mailmanBalance;
+    }
+
+    public void setMailmanBalance(int mailmanBalance) {
+        this.mailmanBalance = mailmanBalance;
+    }
 
     public String getUid() {
         return uid;

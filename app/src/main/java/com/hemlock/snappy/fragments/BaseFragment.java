@@ -20,4 +20,19 @@ public class BaseFragment extends Fragment {
         if (fragment != null)
             getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
+
+    public void startLoading() {
+        ((MainActivity) getActivity()).startLoading();
+    }
+
+    public void stopLoading() {
+        ((MainActivity) getActivity()).stopLoading();
+    }
+
+    public void popBackStack() {
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment != null)
+            getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        getActivity().getSupportFragmentManager().popBackStack();
+    }
 }

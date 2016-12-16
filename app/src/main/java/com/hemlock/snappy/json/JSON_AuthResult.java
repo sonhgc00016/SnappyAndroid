@@ -2,28 +2,28 @@ package com.hemlock.snappy.json;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.hemlock.snappy.model.tracking.Tracking;
+import com.hemlock.snappy.model.User;
 
 /**
- * Created by lookonlyatme on 12/9/16.
+ * Created by lookonlyatme on 12/16/16.
  */
 
-public class JSON_TrackingResult {
+public class JSON_AuthResult {
     @SerializedName("success")
     @Expose
     private Boolean success;
-    @SerializedName("tracking")
-    @Expose
-    private Tracking tracking;
     @SerializedName("message")
     @Expose
-    private String message;
+    private Boolean message;
+    @SerializedName("data")
+    @Expose
+    private User user;
 
-    public String getMessage() {
+    public Boolean getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Boolean message) {
         this.message = message;
     }
 
@@ -35,11 +35,11 @@ public class JSON_TrackingResult {
         this.success = success;
     }
 
-    public Tracking getTracking() {
-        return tracking;
+    public User getUser() {
+        return user;
     }
 
-    public void setTracking(Tracking tracking) {
-        this.tracking = tracking;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
