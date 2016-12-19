@@ -11,6 +11,9 @@ public class JSON_CommonResult {
     @SerializedName("success")
     @Expose
     private Boolean success;
+    @SerializedName("message")
+    @Expose
+    private String message;
 
     public String getMessage() {
         return message;
@@ -27,8 +30,4 @@ public class JSON_CommonResult {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-
-    @SerializedName("message")
-    @Expose
-    private String message;
 }

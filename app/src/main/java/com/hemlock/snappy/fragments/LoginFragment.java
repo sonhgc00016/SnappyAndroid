@@ -1,8 +1,7 @@
 package com.hemlock.snappy.fragments;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -56,14 +55,13 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private LoginButton btnLoginFb;
     private EditText txtEmailPhoneNumber;
     private EditText txtPassword;
-    private SharedPreferences.Editor editor;
     private ApiInterface apiService;
     private Call<JSON_LoginResult> call;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         try {
-            PackageInfo info = getActivity().getPackageManager().getPackageInfo(
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo info = getActivity().getPackageManager().getPackageInfo(
                     "com.hemlock.snappy",
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
@@ -88,11 +86,10 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
         Button btnLogin = (Button) v.findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
+        Button btnRegister = (Button) v.findViewById(R.id.btn_register);
+        btnRegister.setOnClickListener(this);
 
         btnLoginFb = (LoginButton) v.findViewById(R.id.btn_login_fb);
-
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPref.edit();
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
 
@@ -116,7 +113,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         // Get facebook data from login
-                        final Bundle bundle = getFacebookData(object);
+                        getFacebookData(object);
 
                         try {
                             call = apiService.loginFb(object.getString(getString(R.string.id)), loginResult.getAccessToken().getToken());
@@ -130,12 +127,8 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                             public void onResponse(Call<JSON_LoginResult> call, Response<JSON_LoginResult> response) {
                                 stopLoading();
                                 if (response.body().getSuccess()) {
-                                    editor.putString(getString(R.string.name), response.body().getName());
-                                    editor.putString(getString(R.string.access_token), response.body().getAccessToken());
-                                    if (bundle != null) {
-                                        editor.putString(getString(R.string.profile_pic), bundle.getString(getString(R.string.profile_pic)));
-                                    }
-                                    editor.apply();
+                                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    Utils.saveToSharedPref(getActivity(), response.body().getName(), response.body().getAccessToken(), "");
 
                                     HomeFragment homeFragment = new HomeFragment();
 
@@ -152,7 +145,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                             public void onFailure(Call<JSON_LoginResult> call, Throwable t) {
                                 stopLoading();
                                 LoginManager.getInstance().logOut();
-                                Toast.makeText(getActivity(), getString(R.string.login_fail_message), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), R.string.login_fail_message, Toast.LENGTH_LONG).show();
                                 Log.w(getClass().getSimpleName(), t.toString());
                             }
                         });
@@ -185,7 +178,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                 URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=200&height=150");
                 Log.i(getString(R.string.profile_pic), profile_pic + "");
                 bundle.putString(getString(R.string.profile_pic), profile_pic.toString());
-
+                Utils.saveToSharedPref(getActivity(), "", "", profile_pic.toString());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 return null;
@@ -194,8 +187,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             bundle.putString(getString(R.string.fbId), id);
             if (object.has(getString(R.string.first_name)) && object.has(getString(R.string.last_name))) {
                 String name = object.getString(getString(R.string.first_name)) + " " + object.getString(getString(R.string.last_name));
-                editor.putString(getString(R.string.name), name);
-                editor.apply();
+                Utils.saveToSharedPref(getActivity(), name, "", "");
             }
 
             if (object.has(getString(R.string.email)))
@@ -221,46 +213,55 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_login) {
-            Utils.closeSoftKeyboard(getActivity());
-            startLoading();
-            String emailPhoneNumber = txtEmailPhoneNumber.getText().toString();
-            String password = txtPassword.getText().toString();
+        int id = v.getId();
+        switch (id) {
+            case R.id.btn_login:
+                login();
+                break;
+            case R.id.btn_register:
+                replaceFragment(new FragmentRegister(), true);
+                break;
+            default:
+                break;
+        }
+    }
 
-            if (Patterns.EMAIL_ADDRESS.matcher(emailPhoneNumber).matches()) {
-                call = apiService.loginEmail(emailPhoneNumber, password);
-            } else {
-                call = apiService.loginPhoneNumber(emailPhoneNumber, password);
+    private void login() {
+        Utils.closeSoftKeyboard(getActivity());
+        startLoading();
+        String emailPhoneNumber = txtEmailPhoneNumber.getText().toString();
+        String password = txtPassword.getText().toString();
+
+        if (Patterns.EMAIL_ADDRESS.matcher(emailPhoneNumber).matches()) {
+            call = apiService.loginEmail(emailPhoneNumber, password);
+        } else {
+            call = apiService.loginPhoneNumber(emailPhoneNumber, password);
+        }
+
+        call.enqueue(new Callback<JSON_LoginResult>() {
+            @Override
+            public void onResponse(Call<JSON_LoginResult> call, Response<JSON_LoginResult> response) {
+                stopLoading();
+                if (response.body() != null)
+                    if (response.body().getSuccess()) {
+                        Utils.saveToSharedPref(getActivity(), response.body().getName(), response.body().getAccessToken(), "");
+
+                        HomeFragment homeFragment = new HomeFragment();
+
+                        removeAllInBackStack();
+
+                        replaceFragment(homeFragment, true);
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    }
             }
 
-            call.enqueue(new Callback<JSON_LoginResult>() {
-                @Override
-                public void onResponse(Call<JSON_LoginResult> call, Response<JSON_LoginResult> response) {
-                    stopLoading();
-                    if (response.body() != null)
-                        if (response.body().getSuccess()) {
-
-                            editor.putString(getString(R.string.name), response.body().getName());
-                            editor.putString(getString(R.string.access_token), response.body().getAccessToken());
-                            editor.apply();
-
-                            HomeFragment homeFragment = new HomeFragment();
-
-                            removeAllInBackStack();
-
-                            replaceFragment(homeFragment, true);
-                        } else {
-                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                }
-
-                @Override
-                public void onFailure(Call<JSON_LoginResult> call, Throwable t) {
-                    stopLoading();
-                    Toast.makeText(getActivity(), getString(R.string.login_fail_message), Toast.LENGTH_LONG).show();
-                    Log.w(getClass().getSimpleName(), t.toString());
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<JSON_LoginResult> call, Throwable t) {
+                stopLoading();
+                Toast.makeText(getActivity(), getString(R.string.login_fail_message), Toast.LENGTH_LONG).show();
+                Log.w(getClass().getSimpleName(), t.toString());
+            }
+        });
     }
 }

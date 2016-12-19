@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="@string/snappy_express"
+        android:text="@string/create_user"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -23,11 +22,29 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/txt_email_phone_number"
+            android:id="@+id/txt_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:hint="@string/hint_email_phone_number"
+            android:hint="@string/hint_name"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/txt_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/hint_phone_number"
+            android:inputType="phone"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/txt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
             android:textAlignment="center" />
 
         <EditText
@@ -39,29 +56,14 @@
             android:inputType="textPassword"
             android:textAlignment="center" />
 
-        <Button
-            android:id="@+id/btn_login"
+        <EditText
+            android:id="@+id/txt_re_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorAccent"
-            android:text="@string/btn_text_Login"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:theme="@style/AppTheme.Button" />
-
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/btn_login_fb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="14dp"
-            android:paddingTop="14dp"
-            android:textSize="16sp"
-            facebook:com_facebook_login_text="@string/fb_login_text"
-            facebook:com_facebook_logout_text="@string/fb_logout_text" />
+            android:hint="@string/hint_re_password"
+            android:inputType="textPassword"
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/btn_register"
@@ -69,8 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:background="@color/deepOrange500"
-            android:text="@string/register"
+            android:background="@color/colorAccent"
+            android:text="@string/create_user"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:theme="@style/AppTheme.Button" />

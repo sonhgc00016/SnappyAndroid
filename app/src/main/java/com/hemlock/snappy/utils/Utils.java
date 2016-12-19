@@ -1,5 +1,6 @@
 package com.hemlock.snappy.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
@@ -18,8 +19,7 @@ import java.text.DecimalFormat;
 public class Utils {
     public static String getLocalAccessToken(FragmentActivity activity) {
         SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        String accessToken = sharedPref.getString(activity.getString(R.string.access_token), activity.getResources().getString(R.string.access_token));
-        return accessToken;
+        return sharedPref.getString(activity.getString(R.string.access_token), activity.getResources().getString(R.string.access_token));
     }
 
     public static void removeAllInSharedPref(FragmentActivity activity) {
@@ -51,5 +51,21 @@ public class Utils {
     public static String formatCurrency(FragmentActivity activity, int amount) {
         DecimalFormat formatter = new DecimalFormat(activity.getString(R.string.format_number));
         return String.format("%s%s", formatter.format(amount), activity.getString(R.string.vnd));
+    }
+
+    public static boolean isEmpty(String text) {
+        return text.isEmpty() || text.length() == 0 || text.equals("");
+    }
+
+    public static void saveToSharedPref(Activity act, String name, String accessToken, String profilePic) {
+        SharedPreferences sharedPref = act.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        if (!isEmpty(name))
+            editor.putString(act.getString(R.string.name), name);
+        if (!isEmpty(accessToken))
+            editor.putString(act.getString(R.string.access_token), accessToken);
+        if (!isEmpty(profilePic))
+            editor.putString(act.getString(R.string.profile_pic), profilePic);
+        editor.apply();
     }
 }

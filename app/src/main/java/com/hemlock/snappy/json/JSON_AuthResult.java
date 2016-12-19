@@ -14,16 +14,16 @@ public class JSON_AuthResult {
     private Boolean success;
     @SerializedName("message")
     @Expose
-    private Boolean message;
+    private String message;
     @SerializedName("data")
     @Expose
     private User user;
 
-    public Boolean getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Boolean message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

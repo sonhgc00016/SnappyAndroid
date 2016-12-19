@@ -4,13 +4,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hint_email_phone_number">Email/Số điện thoại</string>
-    <string name="hint_password">Mật khẩu</string>
+    <string name="hint_email_phone_number">Nhập email/số điện thoại</string>
+    <string name="hint_password">Nhập mật khẩu</string>
     <string name="btn_text_Login">Đăng nhập</string>
     <string name="snappy_express">Snappy Express</string>
     <string name="fb_login_text">Đăng nhập Facebook</string>
     <string name="fb_logout_text">Đăng xuất</string>
-    <string name="access_token">access_token</string>
+    <string name="access_token">""</string>
     <string name="name">name</string>
     <string name="hello">"Xin chào "</string>
     <string name="fbId">fbId</string>
@@ -25,7 +25,7 @@
     <string name="cancel">Cancel</string>và
     <string name="scan_barcode">Quét mã</string>
     <string name="transfer_address">Giao kho</string>
-    <string name="tracking_list">Đơn hàng của bạn</string>
+    <string name="tracking_list">Đơn hàng đang giao</string>
     <string name="login_fail_message">Đăng nhập thất bại vui lòng kiểm tra lại thông tin  thử lại</string>
     <string name="tracking_id">Mã vận đơn:</string>
     <string name="receiver_name">Người nhận:</string>
@@ -36,7 +36,7 @@
     <string name="total_cod">Thu hộ:</string>
     <string name="tracking">tracking</string>
     <string name="format_number">#,###,###</string>
-    <string name="vnd">" ₫"</string>
+    <string name="vnd">" đ"</string>
     <string name="back">Quay lại</string>
     <string name="picked_up_vi">Đã nhận hàng</string>
     <string name="picked_up">picked_up</string>
@@ -59,4 +59,21 @@
     <string name="wrong_tracking_id">Sai mã vận đơn</string>
     <string name="no_result">Không tìm thấy dữ liệu</string>
     <string name="maiman_balance">Tiền đang giữ:</string>
+    <string name="register">Đăng ký</string>
+    <string name="create_user">Tạo tài khoản</string>
+    <string name="hint_name">Nhập tên</string>
+    <string name="hint_phone_number">Nhập số điện thoại</string>
+    <string name="hint_email">Nhập email</string>
+    <string name="hint_re_password">Nhập lại mật khẩu</string>
+    <string name="register_warning">Vui lòng nhập tên, số điện thoại và mật khẩu</string>
+    <string name="register_warning2">Vui lòng nhập lại mật khẩu</string>
+    <string name="register_warning3">Mật khẩu nhập lại không khớp</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="hint_new_password">Nhập mật khẩu mới</string>
+    <string name="hint_renew_password">Nhập lại mật khẩu mới</string>
+    <string name="save_info">Lưu thông tin</string>
+    <string name="change_password_warning1">Vui lòng nhập mật khẩu</string>
+    <string name="change_password_warning2">Vui lòng nhập mật khẩu mới</string>
+    <string name="change_password_warning3">Mật khẩu bạn nhập lại không khớp</string>
+    <string name="hint_current_password">Nhập mật khẩu hiện tại</string>
 </resources>

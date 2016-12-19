@@ -3,6 +3,7 @@ package com.hemlock.snappy.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -36,7 +37,6 @@ import retrofit2.Response;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener, MainActivity.OnBackPressedListener {
     private String name, accessToken;
-    private ApiInterface apiService;
     private  TextView tvName, tvMailmanBalance;
 
     @Nullable
@@ -49,6 +49,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         accessToken = sharedPref.getString(getString(R.string.access_token), getResources().getString(R.string.access_token));
 
         tvName = (TextView) v.findViewById(R.id.tv_name);
+        tvName.setOnClickListener(this);
         tvMailmanBalance = (TextView) v.findViewById(R.id.tv_mailman_balance);
 
         MainActivity mainActivity = (MainActivity) getActivity();
@@ -73,8 +74,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvName.setText(getString(R.string.hello) + " " + name);
-        apiService = ApiClient.getClient().create(ApiInterface.class);
+        tvName.setText(name);
+        tvName.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         Call<JSON_AuthResult> call = apiService.auth(accessToken);
         startLoading();
@@ -86,7 +88,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     if (response.body().getSuccess()) {
                         tvMailmanBalance.setText(getString(R.string.maiman_balance) + " "
                                 + Utils.formatCurrency(getActivity(), response.body().getUser().getMailmanBalance()));
+                        Utils.saveToSharedPref(getActivity(), response.body().getUser().getName(), "", "");
                     } else {
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                         Utils.removeAllInSharedPref(getActivity());
                         removeAllInBackStack();
                         replaceFragment(new LoginFragment(), false);
@@ -119,6 +123,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.btn_tracking_list:
                 replaceFragment(new TrackingListFragment(), true);
+                break;
+            case R.id.tv_name:
+                replaceFragment(new FragmentChangePassword(), true);
                 break;
             default:
                 break;

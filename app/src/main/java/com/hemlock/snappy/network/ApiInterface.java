@@ -53,4 +53,19 @@ public interface ApiInterface {
 
     @GET("snappy/management/trackings/trackings_by_mailman_picked_up")
     Call<JSON_ListTrackingResult> getCurrentPickedTracking(@Query("access_token") String accessToken);
+
+    @POST("users")
+    Call<JSON_LoginResult> register(
+            @Query("name") String name,
+            @Query("phone_number") String phoneNumber,
+            @Query("email") String email,
+            @Query("password") String password
+    );
+
+    @POST("me")
+    Call<JSON_CommonResult> changePassword(
+            @Query("access_token") String accessToken,
+            @Query("current_password") String currentPassword,
+            @Query("new_password") String newPassword
+    );
 }
