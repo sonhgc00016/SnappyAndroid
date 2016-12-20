@@ -1,5 +1,6 @@
 package com.hemlock.snappy.adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ public class TrackingListAdapter extends RecyclerView.Adapter<TrackingListAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvTrackingId.setText(mTrackings.get(position).getId());
         holder.tvCurrentStatus.setText(mTrackings.get(position).getCurrentStatus());
+        holder.tvCurrentStatus.setTextColor(Color.parseColor(mTrackings.get(position).getStatusColor()));
     }
 
     @Override

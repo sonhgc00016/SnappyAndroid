@@ -20,6 +20,7 @@ import com.hemlock.snappy.network.ApiClient;
 import com.hemlock.snappy.network.ApiInterface;
 import com.hemlock.snappy.utils.Utils;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -97,11 +98,15 @@ public class TrackingListFragment extends BaseFragment implements TrackingListAd
                 tracking.getServices().getCodService().getAmount(), tracking.getServices().getCodService().getCost());
         bundle.putString(getString(R.string.tracking_id), tracking.getId());
         bundle.putString(getString(R.string.receiver_name), tracking.getTo().getName());
-        bundle.putString(getString(R.string.receiver_address), tracking.getTo().getAddress() + " " + tracking.getTo().getFullAddress());
+        String fullAddress = tracking.getTo().getAddress() + " " + tracking.getTo().getFullAddress();
+        URL url = Utils.convertToUrl("https://maps.google.com/?q=" + fullAddress);
+        String addressLink = "<a href='" + url + "'>" + fullAddress + "</a>";
+        bundle.putString(getString(R.string.receiver_address), addressLink);
         bundle.putString(getString(R.string.receiver_phone_number), tracking.getTo().getPhoneNumber());
         bundle.putString(getString(R.string.package_desc), tracking.getServices().getPackage().getSnippet());
         bundle.putInt(getString(R.string.total_cod), totalCod);
         bundle.putString(getString(R.string.current_status), tracking.getCurrentStatus());
+        bundle.putString(getString(R.string.status_color), tracking.getStatusColor());
         bundle.putString(getString(R.string.last_note), tracking.getLastUpdate().getNote());
         trackingDetailsFragment.setArguments(bundle);
 

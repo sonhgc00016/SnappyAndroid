@@ -188,6 +188,9 @@ public class Tracking {
     @SerializedName("current_status")
     @Expose
     private String currentStatus;
+    @SerializedName("status_color")
+    @Expose
+    private String statusColor;
     @SerializedName("business_id")
     @Expose
     private Integer businessId;
@@ -195,7 +198,7 @@ public class Tracking {
     @Expose
     private Integer balanceAdjustment;
 
-    public Tracking(List<Update> updates, String updatedAt, To to, Services services, LastUpdate lastUpdate, String insertedAt, String id, From from, String currentStatus, Integer businessId, Integer balanceAdjustment) {
+    public Tracking(List<Update> updates, String updatedAt, To to, Services services, LastUpdate lastUpdate, String insertedAt, String id, From from, String currentStatus, Integer businessId, Integer balanceAdjustment, String statusColor) {
         this.updates = updates;
         this.updatedAt = updatedAt;
         this.to = to;
@@ -207,6 +210,15 @@ public class Tracking {
         this.currentStatus = currentStatus;
         this.businessId = businessId;
         this.balanceAdjustment = balanceAdjustment;
+        this.statusColor = statusColor;
+    }
+
+    public String getStatusColor() {
+        return statusColor;
+    }
+
+    public void setStatusColor(String statusColor) {
+        this.statusColor = statusColor;
     }
 
     /**
@@ -376,6 +388,9 @@ class Update {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("status_color")
+    @Expose
+    private String statusColor;
     @SerializedName("note")
     @Expose
     private String note;
@@ -383,12 +398,21 @@ class Update {
     @Expose
     private String location;
 
-    public Update(String updatedBy, String updatedAt, String status, String note, String location) {
+    public Update(String updatedBy, String updatedAt, String status, String note, String location, String statusColor) {
         this.updatedBy = updatedBy;
         this.updatedAt = updatedAt;
         this.status = status;
         this.note = note;
         this.location = location;
+        this.statusColor = statusColor;
+    }
+
+    public String getStatusColor() {
+        return statusColor;
+    }
+
+    public void setStatusColor(String statusColor) {
+        this.statusColor = statusColor;
     }
 
     /**

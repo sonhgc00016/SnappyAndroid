@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.login.LoginManager;
 import com.hemlock.snappy.R;
 
+import java.net.URI;
+import java.net.URL;
 import java.text.DecimalFormat;
 
 /**
@@ -67,5 +71,30 @@ public class Utils {
         if (!isEmpty(profilePic))
             editor.putString(act.getString(R.string.profile_pic), profilePic);
         editor.apply();
+    }
+
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String html){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
+    }
+
+    public static URL convertToUrl(String urlStr) {
+        try {
+            URL url = new URL(urlStr);
+            URI uri = new URI(url.getProtocol(), url.getUserInfo(),
+                    url.getHost(), url.getPort(), url.getPath(),
+                    url.getQuery(), url.getRef());
+            url = uri.toURL();
+            return url;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

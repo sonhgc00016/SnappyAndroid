@@ -14,6 +14,9 @@ public class LastUpdate {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("status_color")
+    @Expose
+    private String statusColor;
     @SerializedName("note")
     @Expose
     private String note;
@@ -21,12 +24,21 @@ public class LastUpdate {
     @Expose
     private String location;
 
-    public LastUpdate(String updatedBy, String updatedAt, String status, String note, String location) {
+    public LastUpdate(String updatedBy, String updatedAt, String status, String note, String location, String statusColor) {
         this.updatedBy = updatedBy;
         this.updatedAt = updatedAt;
         this.status = status;
         this.note = note;
         this.location = location;
+        this.statusColor = statusColor;
+    }
+
+    public String getStatusColor() {
+        return statusColor;
+    }
+
+    public void setStatusColor(String statusColor) {
+        this.statusColor = statusColor;
     }
 
     /**

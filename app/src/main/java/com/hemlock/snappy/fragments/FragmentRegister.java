@@ -85,6 +85,7 @@ public class FragmentRegister extends BaseFragment implements View.OnClickListen
 
     private void register() {
         startLoading();
+        Utils.closeSoftKeyboard(getActivity());
         final String name = txtName.getText().toString();
         String phoneNumber = txtPhoneNumber.getText().toString();
         String email = txtEmail.getText().toString();
@@ -104,7 +105,6 @@ public class FragmentRegister extends BaseFragment implements View.OnClickListen
                         if (response.body().getSuccess()) {
                             Utils.saveToSharedPref(getActivity(), name, response.body().getAccessToken(), "");
                             removeAllInBackStack();
-                            Utils.closeSoftKeyboard(getActivity());
                             replaceFragment(new HomeFragment(), false);
                         } else {
                             Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();

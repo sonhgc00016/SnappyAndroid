@@ -26,7 +26,7 @@
     <string name="scan_barcode">Quét mã</string>
     <string name="transfer_address">Giao kho</string>
     <string name="tracking_list">Đơn hàng đang giao</string>
-    <string name="login_fail_message">Đăng nhập thất bại vui lòng kiểm tra lại thông tin  thử lại</string>
+    <string name="login_fail_message">Đăng nhập thất bại vui lòng kiểm tra lại thông tin và thử lại</string>
     <string name="tracking_id">Mã vận đơn:</string>
     <string name="receiver_name">Người nhận:</string>
     <string name="receiver_phone_number">Số điện thoại:</string>
@@ -76,4 +76,5 @@
     <string name="change_password_warning2">Vui lòng nhập mật khẩu mới</string>
     <string name="change_password_warning3">Mật khẩu bạn nhập lại không khớp</string>
     <string name="hint_current_password">Nhập mật khẩu hiện tại</string>
+    <string name="status_color">status_color</string>
 </resources>

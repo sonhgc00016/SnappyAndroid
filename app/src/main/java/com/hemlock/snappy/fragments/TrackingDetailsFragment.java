@@ -1,7 +1,9 @@
 package com.hemlock.snappy.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,12 +90,15 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
             checkCurrentStatus(currentStatus);
             tvTrackingId.setText(trackingId);
             tvReceiverName.setText(bundle.getString(getString(R.string.receiver_name)));
-            tvReceiverAddress.setText(bundle.getString(getString(R.string.receiver_address)));
+            tvReceiverAddress.setClickable(true);
+            tvReceiverAddress.setMovementMethod(LinkMovementMethod.getInstance());
+            tvReceiverAddress.setText(Utils.fromHtml(bundle.getString(getString(R.string.receiver_address))));
             tvReceiverPhoneNumber.setText(bundle.getString(getString(R.string.receiver_phone_number)));
             tvPackageDesc.setText(bundle.getString(getString(R.string.package_desc)));
             int totalCod = bundle.getInt(getString(R.string.total_cod));
             tvTotalCod.setText(Utils.formatCurrency(getActivity(), totalCod));
             tvCurrentStatus.setText(currentStatus);
+            tvCurrentStatus.setTextColor(Color.parseColor(bundle.getString(getString(R.string.status_color))));
             tvLastNote.setText(bundle.getString(getString(R.string.last_note)));
         } else {
             Call<JSON_TrackingResult> call = apiService.showTracking(trackingId, accessToken);
@@ -115,6 +120,7 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
                                     tracking.getServices().getCodService().getAmount(), tracking.getServices().getCodService().getCost());
                             tvTotalCod.setText(Utils.formatCurrency(getActivity(), totalCod));
                             tvCurrentStatus.setText(tracking.getCurrentStatus());
+                            tvCurrentStatus.setTextColor(Color.parseColor(tracking.getStatusColor()));
                             tvLastNote.setText(tracking.getLastUpdate().getNote());
                         } else {
                             Log.w(getClass().getSimpleName(), "Message: " + response.body().getMessage());
