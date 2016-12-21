@@ -22,7 +22,7 @@
     <string name="location">location</string>
     <string name="profile_pic">profile_pic</string>
     <string name="id">id</string>
-    <string name="cancel">Cancel</string>và
+    <string name="cancel">Hủy</string>
     <string name="scan_barcode">Quét mã</string>
     <string name="transfer_address">Giao kho</string>
     <string name="tracking_list">Đơn hàng đang giao</string>
@@ -77,4 +77,5 @@
     <string name="change_password_warning3">Mật khẩu bạn nhập lại không khớp</string>
     <string name="hint_current_password">Nhập mật khẩu hiện tại</string>
     <string name="status_color">status_color</string>
+    <string name="request_received">Đã khởi tạo</string>
 </resources>

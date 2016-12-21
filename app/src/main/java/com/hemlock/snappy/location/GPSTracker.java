@@ -161,9 +161,9 @@ public class GPSTracker extends Activity implements LocationListener {
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         // Setting Dialog Title
-        alertDialog.setTitle("Cài đặt GPS");
+        alertDialog.setTitle("Cài đặt Vị trí");
         // Setting Dialog Message
-        alertDialog.setMessage("GPS hiện đang tắt. Bạn phải bật cài đặt GPS để có thể sử dụng chức năng này?");
+        alertDialog.setMessage("Vị trí hiện đang tắt. Bạn cần phải bật Vị trí của thiết bị để có thể sử dụng chức năng này?");
         // On pressing Settings button
         alertDialog.setPositiveButton("Cài đặt", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

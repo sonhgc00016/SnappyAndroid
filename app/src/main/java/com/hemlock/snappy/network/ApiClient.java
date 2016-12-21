@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    public static final String BASE_URL = "http://192.168.0.106:4000/api/v1/";
+    public static final String BASE_URL = "http://192.168.1.189:4000/api/v1/";
     //    public static final String BASE_URL = "https://pages.fm/api/v1/";
     private static Retrofit retrofit = null;
 

@@ -20,7 +20,6 @@ import com.hemlock.snappy.network.ApiClient;
 import com.hemlock.snappy.network.ApiInterface;
 import com.hemlock.snappy.utils.Utils;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -99,8 +98,7 @@ public class TrackingListFragment extends BaseFragment implements TrackingListAd
         bundle.putString(getString(R.string.tracking_id), tracking.getId());
         bundle.putString(getString(R.string.receiver_name), tracking.getTo().getName());
         String fullAddress = tracking.getTo().getAddress() + " " + tracking.getTo().getFullAddress();
-        URL url = Utils.convertToUrl("https://maps.google.com/?q=" + fullAddress);
-        String addressLink = "<a href='" + url + "'>" + fullAddress + "</a>";
+        String addressLink = Utils.genAddressGoogleMapLink(fullAddress);
         bundle.putString(getString(R.string.receiver_address), addressLink);
         bundle.putString(getString(R.string.receiver_phone_number), tracking.getTo().getPhoneNumber());
         bundle.putString(getString(R.string.package_desc), tracking.getServices().getPackage().getSnippet());

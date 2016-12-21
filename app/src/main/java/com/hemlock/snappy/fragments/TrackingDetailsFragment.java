@@ -46,6 +46,8 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
         tvTrackingId = (TextView) v.findViewById(R.id.tv_tracking_id);
         tvReceiverName = (TextView) v.findViewById(R.id.tv_receiver_name);
         tvReceiverAddress = (TextView) v.findViewById(R.id.tv_receiver_address);
+        tvReceiverAddress.setClickable(true);
+        tvReceiverAddress.setMovementMethod(LinkMovementMethod.getInstance());
         tvReceiverPhoneNumber = (TextView) v.findViewById(R.id.tv_receiver_phone_number);
         tvPackageDesc = (TextView) v.findViewById(R.id.tv_package_desc);
         tvTotalCod = (TextView) v.findViewById(R.id.tv_total_cod);
@@ -90,8 +92,6 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
             checkCurrentStatus(currentStatus);
             tvTrackingId.setText(trackingId);
             tvReceiverName.setText(bundle.getString(getString(R.string.receiver_name)));
-            tvReceiverAddress.setClickable(true);
-            tvReceiverAddress.setMovementMethod(LinkMovementMethod.getInstance());
             tvReceiverAddress.setText(Utils.fromHtml(bundle.getString(getString(R.string.receiver_address))));
             tvReceiverPhoneNumber.setText(bundle.getString(getString(R.string.receiver_phone_number)));
             tvPackageDesc.setText(bundle.getString(getString(R.string.package_desc)));
@@ -113,7 +113,9 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
                             checkCurrentStatus(tracking.getCurrentStatus());
                             tvTrackingId.setText(tracking.getId());
                             tvReceiverName.setText(tracking.getTo().getName());
-                            tvReceiverAddress.setText(tracking.getTo().getAddress() + " " + tracking.getTo().getFullAddress());
+                            String fullAddress = tracking.getTo().getAddress() + " " + tracking.getTo().getFullAddress();
+                            String addressLink = Utils.genAddressGoogleMapLink(fullAddress);
+                            tvReceiverAddress.setText(Utils.fromHtml(addressLink));
                             tvReceiverPhoneNumber.setText(tracking.getTo().getPhoneNumber());
                             tvPackageDesc.setText(tracking.getServices().getPackage().getSnippet());
                             int totalCod = Utils.calTotalCod(tracking.getServices().getIsReceiverPay(), tracking.getServices().getShippingCost(),
@@ -123,7 +125,7 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
                             tvCurrentStatus.setTextColor(Color.parseColor(tracking.getStatusColor()));
                             tvLastNote.setText(tracking.getLastUpdate().getNote());
                         } else {
-                            Log.w(getClass().getSimpleName(), "Message: " + response.body().getMessage());
+                            Log.w(getClass().getSimpleName(), response.body().getMessage());
                         }
                 }
 
@@ -223,7 +225,7 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
             case "Đã nhận hàng":
                 btnPickedUp.setVisibility(View.GONE);
                 btnOnTheWay.setVisibility(View.VISIBLE);
-                btnOutOfDelivery.setVisibility(View.GONE);
+                btnOutOfDelivery.setVisibility(View.VISIBLE);
                 btnDelivered.setVisibility(View.GONE);
                 btnUndeliverable.setVisibility(View.GONE);
                 btnReturning.setVisibility(View.GONE);

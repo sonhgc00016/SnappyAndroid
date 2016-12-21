@@ -147,7 +147,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (scanResult != null) {
             if (scanResult.getContents() == null) {
-                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.cancel, Toast.LENGTH_LONG).show();
             } else {
                 Pattern p = Pattern.compile("(S|E)[0-9]{8,10}");
                 Matcher m = p.matcher(scanResult.getContents());

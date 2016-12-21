@@ -84,7 +84,7 @@ public class Utils {
         return result;
     }
 
-    public static URL convertToUrl(String urlStr) {
+    private static URL convertToUrl(String urlStr) {
         try {
             URL url = new URL(urlStr);
             URI uri = new URI(url.getProtocol(), url.getUserInfo(),
@@ -96,5 +96,10 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String genAddressGoogleMapLink(String fullAddress) {
+        URL url = convertToUrl("https://maps.google.com/?q=" + fullAddress);
+        return "<a href='" + url + "'>" + fullAddress + "</a>";
     }
 }
