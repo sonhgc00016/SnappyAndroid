@@ -24,8 +24,7 @@
     <string name="id">id</string>
     <string name="cancel">Hủy</string>
     <string name="scan_barcode">Quét mã</string>
-    <string name="transfer_address">Giao kho</string>
-    <string name="tracking_list">Đơn hàng đang giao</string>
+    <string name="picked_up_trackings">Đơn hàng đã nhận</string>
     <string name="login_fail_message">Đăng nhập thất bại vui lòng kiểm tra lại thông tin và thử lại</string>
     <string name="tracking_id">Mã vận đơn:</string>
     <string name="receiver_name">Người nhận:</string>
@@ -42,7 +41,7 @@
     <string name="picked_up">picked_up</string>
     <string name="last_note">Ghi chú</string>
     <string name="arrow_right">arrow right</string>
-    <string name="on_the_way_vi">Đang vận chuyển</string>
+    <string name="on_the_way_vi">Giao kho</string>
     <string name="on_the_way">on_the_way</string>
     <string name="out_for_delivery_vi">Đang giao hàng</string>
     <string name="out_for_delivery">out_for_delivery</string>
@@ -78,4 +77,5 @@
     <string name="hint_current_password">Nhập mật khẩu hiện tại</string>
     <string name="status_color">status_color</string>
     <string name="request_received">Đã khởi tạo</string>
+    <string name="shipping_trackings">Đơn hàng đang giao</string>
 </resources>

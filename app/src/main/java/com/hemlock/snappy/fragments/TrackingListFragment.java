@@ -57,11 +57,21 @@ public class TrackingListFragment extends BaseFragment implements TrackingListAd
         rcvTrackings.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         rcvTrackings.setLayoutManager(layoutManager);
+        loadList();
+    }
 
+    private void loadList() {
         String accessToken = Utils.getLocalAccessToken(getActivity());
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<JSON_ListTrackingResult> call = apiService.getCurrentPickedTracking(accessToken);
+        Call<JSON_ListTrackingResult> call;
+
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.getString(getString(R.string.picked_up_trackings)) != null)
+            call = apiService.getCurrentPickedTracking(accessToken);
+        else
+            call = apiService.getCurrentShippingTracking(accessToken);
+
         startLoading();
         call.enqueue(new Callback<JSON_ListTrackingResult>() {
             @Override
@@ -84,6 +94,12 @@ public class TrackingListFragment extends BaseFragment implements TrackingListAd
                 Log.w(getClass().getSimpleName(), t.toString());
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadList();
     }
 
     @Override

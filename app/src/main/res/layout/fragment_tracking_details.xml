@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="10dp">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="10dp"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/tracking_id" />
+            android:text="@string/tracking_id"/>
 
         <TextView
             android:id="@+id/tv_tracking_id"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/tracking_id"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/receiver_name" />
+            android:text="@string/receiver_name"/>
 
         <TextView
             android:id="@+id/tv_receiver_name"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/receiver_name"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -60,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/receiver_address" />
+            android:text="@string/receiver_address"/>
 
         <TextView
             android:id="@+id/tv_receiver_address"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/receiver_address"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -82,7 +82,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/receiver_phone_number" />
+            android:text="@string/receiver_phone_number"/>
 
         <TextView
             android:id="@+id/tv_receiver_phone_number"
@@ -91,7 +91,7 @@
             android:layout_weight="50"
             android:autoLink="all"
             android:text="@string/receiver_phone_number"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -105,7 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/package_desc" />
+            android:text="@string/package_desc"/>
 
         <TextView
             android:id="@+id/tv_package_desc"
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/package_desc"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -127,7 +127,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/total_cod" />
+            android:text="@string/total_cod"/>
 
         <TextView
             android:id="@+id/tv_total_cod"
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/total_cod"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -149,7 +149,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/current_status" />
+            android:text="@string/current_status"/>
 
         <TextView
             android:id="@+id/tv_current_status"
@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/current_status"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -171,7 +171,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/last_note" />
+            android:text="@string/last_note"/>
 
         <TextView
             android:id="@+id/tv_last_note"
@@ -180,7 +180,7 @@
             android:layout_weight="50"
             android:autoLink="all"
             android:text="@string/last_note"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -191,20 +191,20 @@
         android:weightSum="100">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_new_note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/new_note" />
+            android:text="@string/new_note"/>
 
         <EditText
-            android:id="@+id/tv_new_note"
+            android:id="@+id/txt_new_note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:hint="@string/enter_new_note"
             android:lines="2"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <Button
@@ -214,10 +214,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/deepOrange500"
         android:text="@string/picked_up_vi"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:theme="@style/AppTheme.Button"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_on_the_way"
@@ -226,10 +224,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/deepOrange500"
         android:text="@string/on_the_way_vi"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:theme="@style/AppTheme.Button"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_out_for_delivery"
@@ -238,10 +234,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/deepOrange500"
         android:text="@string/out_for_delivery_vi"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:theme="@style/AppTheme.Button"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_delivered"
@@ -250,10 +244,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/deepOrange500"
         android:text="@string/delivered_vi"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:theme="@style/AppTheme.Button"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_undeliverable"
@@ -262,10 +254,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/deepOrange500"
         android:text="@string/undeliverable_vi"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:theme="@style/AppTheme.Button"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_returning"
@@ -274,10 +264,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/deepOrange500"
         android:text="@string/returning_vi"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:theme="@style/AppTheme.Button"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_returned"
@@ -286,9 +274,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/deepOrange500"
         android:text="@string/returned_vi"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        android:theme="@style/AppTheme.Button"
+        android:visibility="gone"/>
 
 </LinearLayout>

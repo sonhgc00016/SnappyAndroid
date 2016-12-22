@@ -64,8 +64,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         Button btnTransferAddress = (Button) v.findViewById(R.id.btn_transfer_address);
         btnTransferAddress.setOnClickListener(this);
 
-        Button btnTrackingList = (Button) v.findViewById(R.id.btn_tracking_list);
-        btnTrackingList.setOnClickListener(this);
+        Button btnPickedUpTrackings = (Button) v.findViewById(R.id.btn_picked_up_trackings);
+        btnPickedUpTrackings.setOnClickListener(this);
+
+        Button btnShippingTrackings = (Button)v.findViewById(R.id.btn_shipping_trackings);
+        btnShippingTrackings.setOnClickListener(this);
 
         return v;
     }
@@ -76,6 +79,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         tvName.setText(name);
         tvName.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        auth();
+    }
+
+    private void auth() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
         Call<JSON_AuthResult> call = apiService.auth(accessToken);
@@ -110,6 +117,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        auth();
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
@@ -121,11 +134,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.btn_transfer_address:
                 break;
-            case R.id.btn_tracking_list:
-                replaceFragment(new TrackingListFragment(), true);
+            case R.id.btn_picked_up_trackings:
+                Bundle bundle = new Bundle();
+                bundle.putString(getString(R.string.picked_up_trackings), getString(R.string.picked_up_trackings));
+                TrackingListFragment trackingListFragment = new TrackingListFragment();
+                trackingListFragment.setArguments(bundle);
+                replaceFragment(trackingListFragment, true);
                 break;
             case R.id.tv_name:
                 replaceFragment(new FragmentChangePassword(), true);
+                break;
+            case R.id.btn_shipping_trackings:
+                replaceFragment(new TrackingListFragment(), true);
                 break;
             default:
                 break;
@@ -133,7 +153,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void scanBarcode() {
-        IntentIntegrator.forSupportFragment(this).setCaptureActivity(CaptureActivityPortrait.class).setOrientationLocked(true).initiateScan();
+        IntentIntegrator.forSupportFragment(this)
+                .setCaptureActivity(CaptureActivityPortrait.class)
+                .setOrientationLocked(true)
+                .initiateScan();
     }
 
     private void logout() {

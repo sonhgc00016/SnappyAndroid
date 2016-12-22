@@ -54,6 +54,9 @@ public interface ApiInterface {
     @GET("snappy/management/trackings/trackings_by_mailman_picked_up")
     Call<JSON_ListTrackingResult> getCurrentPickedTracking(@Query("access_token") String accessToken);
 
+    @GET("snappy/management/trackings/trackings_by_mailman_shipping")
+    Call<JSON_ListTrackingResult> getCurrentShippingTracking(@Query("access_token") String accessToken);
+
     @POST("users")
     Call<JSON_LoginResult> register(
             @Query("name") String name,

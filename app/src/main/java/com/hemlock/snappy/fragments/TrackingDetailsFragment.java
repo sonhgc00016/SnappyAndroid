@@ -32,11 +32,12 @@ import retrofit2.Response;
  */
 
 public class TrackingDetailsFragment extends BaseFragment implements View.OnClickListener, MainActivity.OnBackPressedListener {
-    private TextView tvTrackingId, tvReceiverName, tvReceiverAddress, tvReceiverPhoneNumber, tvPackageDesc, tvTotalCod, tvCurrentStatus, tvLastNote;
+    private TextView tvTrackingId, tvReceiverName, tvReceiverAddress, tvReceiverPhoneNumber, tvPackageDesc, tvTotalCod, tvCurrentStatus, tvLastNote, tvNewNote;
     private String trackingId, accessToken;
     private ApiInterface apiService;
     private Button btnPickedUp, btnOnTheWay, btnOutOfDelivery, btnDelivered, btnUndeliverable, btnReturning, btnReturned;
     private EditText txtNewNote;
+    private Bundle bundle;
 
     @Nullable
     @Override
@@ -53,8 +54,8 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
         tvTotalCod = (TextView) v.findViewById(R.id.tv_total_cod);
         tvCurrentStatus = (TextView) v.findViewById(R.id.tv_current_status);
         tvLastNote = (TextView) v.findViewById(R.id.tv_last_note);
-
-        txtNewNote = (EditText) v.findViewById(R.id.tv_new_note);
+        tvNewNote = (TextView)v.findViewById(R.id.tv_new_note);
+        txtNewNote = (EditText) v.findViewById(R.id.txt_new_note);
 
         btnPickedUp = (Button) v.findViewById(R.id.btn_picked_up);
         btnPickedUp.setOnClickListener(this);
@@ -83,10 +84,13 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         trackingId = bundle.getString(getString(R.string.tracking_id));
         accessToken = Utils.getLocalAccessToken(getActivity());
+        loadTracking();
+    }
 
+    private void loadTracking() {
         if (bundle.getString(getString(R.string.receiver_name)) != null && bundle.getString(getString(R.string.receiver_phone_number)) != null) {
             String currentStatus = bundle.getString(getString(R.string.current_status));
             checkCurrentStatus(currentStatus);
@@ -136,6 +140,12 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
                 }
             });
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadTracking();
     }
 
     @Override
@@ -268,6 +278,15 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
                 btnReturned.setVisibility(View.VISIBLE);
                 break;
             default:
+                btnPickedUp.setVisibility(View.GONE);
+                btnOnTheWay.setVisibility(View.GONE);
+                btnOutOfDelivery.setVisibility(View.GONE);
+                btnDelivered.setVisibility(View.GONE);
+                btnUndeliverable.setVisibility(View.GONE);
+                btnReturning.setVisibility(View.GONE);
+                btnReturned.setVisibility(View.GONE);
+                txtNewNote.setVisibility(View.GONE);
+                tvNewNote.setVisibility(View.GONE);
                 break;
         }
     }

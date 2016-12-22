@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/lnl_name"
@@ -17,7 +18,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/hello"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_name"
@@ -26,7 +27,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/name"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -39,7 +40,7 @@
         android:layout_marginBottom="10dp"
         android:text="@string/maiman_balance"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/lnl1"
@@ -57,7 +58,7 @@
             android:layout_weight="50"
             android:background="@color/deepOrange500"
             android:text="@string/scan_barcode"
-            android:theme="@style/AppTheme.Button" />
+            android:theme="@style/AppTheme.Button"/>
 
         <Button
             android:id="@+id/btn_transfer_address"
@@ -66,19 +67,29 @@
             android:layout_margin="10dp"
             android:layout_weight="50"
             android:background="@color/purple500"
-            android:text="@string/transfer_address"
-            android:theme="@style/AppTheme.Button" />
+            android:text="@string/on_the_way_vi"
+            android:theme="@style/AppTheme.Button"/>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_tracking_list"
+        android:id="@+id/btn_picked_up_trackings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnl1"
         android:layout_margin="10dp"
         android:background="@color/lightBlue400"
-        android:text="@string/tracking_list"
-        android:theme="@style/AppTheme.Button" />
+        android:text="@string/picked_up_trackings"
+        android:theme="@style/AppTheme.Button"/>
+
+    <Button
+        android:id="@+id/btn_shipping_trackings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_picked_up_trackings"
+        android:layout_margin="10dp"
+        android:background="@color/colorAccent"
+        android:text="@string/shipping_trackings"
+        android:theme="@style/AppTheme.Button"/>
 
     <Button
         android:id="@+id/btn_logout"
@@ -88,6 +99,6 @@
         android:layout_margin="10dp"
         android:background="@color/colorPrimary"
         android:text="@string/fb_logout_text"
-        android:theme="@style/AppTheme.Button" />
+        android:theme="@style/AppTheme.Button"/>
 
 </RelativeLayout>
