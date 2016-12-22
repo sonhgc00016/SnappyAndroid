@@ -212,7 +212,8 @@ public class TrackingDetailsFragment extends BaseFragment implements View.OnClic
                         Log.w(getClass().getSimpleName(), t.toString());
                     }
                 });
-            }
+            } else
+                Toast.makeText(getActivity(), R.string.get_location_fail, Toast.LENGTH_LONG).show();
         } else {
             // can't get location
             // GPS or Network is not enabled

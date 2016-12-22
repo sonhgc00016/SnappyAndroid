@@ -61,7 +61,7 @@
             android:theme="@style/AppTheme.Button"/>
 
         <Button
-            android:id="@+id/btn_transfer_address"
+            android:id="@+id/btn_transfer_all"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

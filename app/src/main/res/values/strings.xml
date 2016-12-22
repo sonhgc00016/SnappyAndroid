@@ -78,4 +78,9 @@
     <string name="status_color">status_color</string>
     <string name="request_received">Đã khởi tạo</string>
     <string name="shipping_trackings">Đơn hàng đang giao</string>
+    <string name="get_location_fail">Không thể định vị được vị trí của bạn</string>
+    <string name="warning">Cảnh báo!</string>
+    <string name="transfer_all_warning_message">Bạn có muốn giao kho tất cả đơn hàng bạn đã nhận?</string>
+    <string name="setting">Cài đặt</string>
+    <string name="submit">Duyệt</string>
 </resources>

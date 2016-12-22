@@ -71,4 +71,11 @@ public interface ApiInterface {
             @Query("current_password") String currentPassword,
             @Query("new_password") String newPassword
     );
+
+    @POST("snappy/management/trackings/mailman_transfer_all")
+    Call<JSON_CommonResult> transferAll(
+            @Query("access_token") String accessToken,
+            @Query("lat") double lat,
+            @Query("lon") double lon
+    );
 }
