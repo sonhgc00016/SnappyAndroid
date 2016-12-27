@@ -57,7 +57,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private EditText txtPassword;
     private ApiInterface apiService;
     private Call<JSON_LoginResult> call;
-    private Button btnLogin;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         txtPassword = (EditText) v.findViewById(R.id.txt_password);
         txtPassword.setSelectAllOnFocus(true);
 
-        btnLogin = (Button) v.findViewById(R.id.btn_login);
+        Button btnLogin = (Button) v.findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
         Button btnRegister = (Button) v.findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(this);
@@ -116,42 +115,40 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         // Get facebook data from login
-                        getFacebookData(object);
+                        Bundle bundle = getFacebookData(object);
 
-                        try {
-                            call = apiService.loginFb(object.getString(getString(R.string.id)), loginResult.getAccessToken().getToken());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        startLoading();
+                        if (bundle != null) {
+                            call = apiService.loginFb(bundle.getString(getString(R.string.id)), loginResult.getAccessToken().getToken());
+                            startLoading();
 
-                        call.enqueue(new Callback<JSON_LoginResult>() {
-                            @Override
-                            public void onResponse(Call<JSON_LoginResult> call, Response<JSON_LoginResult> response) {
-                                stopLoading();
-                                if (response.body().getSuccess()) {
-                                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                    Utils.saveToSharedPref(getActivity(), response.body().getName(), response.body().getAccessToken(), "");
+                            call.enqueue(new Callback<JSON_LoginResult>() {
+                                @Override
+                                public void onResponse(Call<JSON_LoginResult> call, Response<JSON_LoginResult> response) {
+                                    stopLoading();
+                                    if (response.body().getSuccess()) {
+                                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                        Utils.saveToSharedPref(getActivity(), response.body().getName(), response.body().getAccessToken(), "");
 
-                                    HomeFragment homeFragment = new HomeFragment();
+                                        HomeFragment homeFragment = new HomeFragment();
 
-                                    removeAllInBackStack();
+                                        removeAllInBackStack();
 
-                                    replaceFragment(homeFragment, true);
-                                } else {
-                                    LoginManager.getInstance().logOut();
-                                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                        replaceFragment(homeFragment, true);
+                                    } else {
+                                        LoginManager.getInstance().logOut();
+                                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<JSON_LoginResult> call, Throwable t) {
-                                stopLoading();
-                                LoginManager.getInstance().logOut();
-                                Toast.makeText(getActivity(), R.string.login_fail_message, Toast.LENGTH_LONG).show();
-                                Log.w(getClass().getSimpleName(), t.toString());
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<JSON_LoginResult> call, Throwable t) {
+                                    stopLoading();
+                                    LoginManager.getInstance().logOut();
+                                    Toast.makeText(getActivity(), R.string.login_fail_message, Toast.LENGTH_LONG).show();
+                                    Log.w(getClass().getSimpleName(), t.toString());
+                                }
+                            });
+                        }
                     }
                 });
                 Bundle parameters = new Bundle();
@@ -172,10 +169,16 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         });
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //No call for super(). Bug on API Level > 11.
+    }
+
     private Bundle getFacebookData(JSONObject object) {
         Bundle bundle = new Bundle();
         try {
             String id = object.getString(getString(R.string.id));
+            bundle.putString(getString(R.string.id), id);
 
             try {
                 URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=200&height=150");
