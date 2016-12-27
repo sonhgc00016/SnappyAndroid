@@ -26,6 +26,15 @@ import retrofit2.Response;
 public class MainActivity extends FragmentActivity {
     private RelativeLayout rlLoading;
     private AVLoadingIndicatorView mLoadingView;
+    private int mailmanBalance;
+
+    public int getMailmanBalance() {
+        return mailmanBalance;
+    }
+
+    public void setMailmanBalance(int mailmanBalance) {
+        this.mailmanBalance = mailmanBalance;
+    }
 
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
@@ -41,7 +50,16 @@ public class MainActivity extends FragmentActivity {
         AppEventsLogger.activateApp(getApplication());
 
         setContentView(R.layout.activity_main);
+        auth(false);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        auth(true);
+    }
+
+    private void auth(final Boolean isAddFragment) {
         String accessToken = Utils.getLocalAccessToken(this);
 
         ApiInterface apiService =
@@ -55,10 +73,14 @@ public class MainActivity extends FragmentActivity {
                 stopLoading();
                 if (response.body() != null)
                     if (response.body().getSuccess()) {
-                        addFragment(HomeFragment.class);
+                        if (response.body().getUser() != null)
+                            setMailmanBalance(response.body().getUser().getMailmanBalance());
+                        if (!isAddFragment)
+                            addFragment(HomeFragment.class);
                     } else {
                         Utils.removeAllInSharedPref(MainActivity.this);
-                        addFragment(LoginFragment.class);
+                        if (!isAddFragment)
+                            addFragment(LoginFragment.class);
                         Log.w(getClass().getSimpleName(), "Message: " + response.body().getMessage());
                     }
             }

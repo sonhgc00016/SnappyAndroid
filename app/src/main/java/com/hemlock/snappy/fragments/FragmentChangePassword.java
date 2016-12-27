@@ -37,8 +37,11 @@ public class FragmentChangePassword extends BaseFragment implements View.OnClick
         mainActivity.setOnBackPressedListener(this);
 
         txtPassword = (EditText) v.findViewById(R.id.txt_password);
+        txtPassword.setSelectAllOnFocus(true);
         txtNewPassword = (EditText) v.findViewById(R.id.txt_new_password);
+        txtNewPassword.setSelectAllOnFocus(true);
         txtRenewPassword = (EditText) v.findViewById(R.id.txt_renew_password);
+        txtRenewPassword.setSelectAllOnFocus(true);
 
         Button btnChangePassword = (Button) v.findViewById(R.id.btn_change_password);
         btnChangePassword.setOnClickListener(this);
@@ -48,40 +51,49 @@ public class FragmentChangePassword extends BaseFragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_change_password) {
-            String password = txtPassword.getText().toString();
-            String newPassword = txtNewPassword.getText().toString();
-            String renewPassword = txtRenewPassword.getText().toString();
-            String accessToken = Utils.getLocalAccessToken(getActivity());
+        int id = view.getId();
+        switch (id) {
+            case R.id.btn_change_password:
+                changePassword();
+                break;
+            default:
+                break;
+        }
+    }
 
-            if (validate(password, newPassword, renewPassword)) {
-                ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                Call<JSON_CommonResult> call = apiService.changePassword(accessToken, password, newPassword);
-                startLoading();
-                call.enqueue(new Callback<JSON_CommonResult>() {
-                    @Override
-                    public void onResponse(Call<JSON_CommonResult> call, Response<JSON_CommonResult> response) {
-                        stopLoading();
-                        if (response.body() != null)
-                            if (response.body().getSuccess()) {
-                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                removeAllInBackStack();
-                                Utils.closeSoftKeyboard(getActivity());
-                                replaceFragment(new HomeFragment(), false);
-                            } else {
-                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                Log.w(getClass().getSimpleName(), "Message: " + response.body().getMessage());
-                            }
-                    }
+    private void changePassword() {
+        Utils.closeSoftKeyboard(getActivity());
+        String password = txtPassword.getText().toString();
+        String newPassword = txtNewPassword.getText().toString();
+        String renewPassword = txtRenewPassword.getText().toString();
+        String accessToken = Utils.getLocalAccessToken(getActivity());
 
-                    @Override
-                    public void onFailure(Call<JSON_CommonResult> call, Throwable t) {
-                        stopLoading();
-                        Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_LONG).show();
-                        Log.w(getClass().getSimpleName(), t.toString());
-                    }
-                });
-            }
+        if (validate(password, newPassword, renewPassword)) {
+            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+            Call<JSON_CommonResult> call = apiService.changePassword(accessToken, password, newPassword);
+            startLoading();
+            call.enqueue(new Callback<JSON_CommonResult>() {
+                @Override
+                public void onResponse(Call<JSON_CommonResult> call, Response<JSON_CommonResult> response) {
+                    stopLoading();
+                    if (response.body() != null)
+                        if (response.body().getSuccess()) {
+                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            removeAllInBackStack();
+                            replaceFragment(new HomeFragment(), false);
+                        } else {
+                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                            Log.w(getClass().getSimpleName(), "Message: " + response.body().getMessage());
+                        }
+                }
+
+                @Override
+                public void onFailure(Call<JSON_CommonResult> call, Throwable t) {
+                    stopLoading();
+                    Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_LONG).show();
+                    Log.w(getClass().getSimpleName(), t.toString());
+                }
+            });
         }
     }
 

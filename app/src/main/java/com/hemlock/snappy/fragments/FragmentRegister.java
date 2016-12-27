@@ -40,7 +40,11 @@ public class FragmentRegister extends BaseFragment implements View.OnClickListen
         txtPhoneNumber = (EditText) v.findViewById(R.id.txt_phone_number);
         txtEmail = (EditText) v.findViewById(R.id.txt_email);
         txtPassword = (EditText) v.findViewById(R.id.txt_password);
+        txtPassword.setSelectAllOnFocus(true);
+        txtPassword.setOnClickListener(this);
         txtRePassword = (EditText) v.findViewById(R.id.txt_re_password);
+        txtRePassword.setSelectAllOnFocus(true);
+        txtRePassword.setOnClickListener(this);
 
         Button btnRegister = (Button) v.findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(this);
@@ -59,6 +63,12 @@ public class FragmentRegister extends BaseFragment implements View.OnClickListen
         switch (id) {
             case R.id.btn_register:
                 register();
+                break;
+            case R.id.txt_password:
+                txtPassword.setText("");
+                break;
+            case R.id.txt_re_password:
+                txtRePassword.setText("");
                 break;
             default:
                 break;

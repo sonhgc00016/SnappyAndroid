@@ -121,12 +121,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        auth();
-    }
-
-    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
@@ -240,6 +234,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //No call for super(). Bug on API Level > 11.
     }
 
     @Override

@@ -57,6 +57,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private EditText txtPassword;
     private ApiInterface apiService;
     private Call<JSON_LoginResult> call;
+    private Button btnLogin;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,9 +83,11 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
         txtEmailPhoneNumber = (EditText) v.findViewById(R.id.txt_email_phone_number);
+        txtEmailPhoneNumber.requestFocus();
         txtPassword = (EditText) v.findViewById(R.id.txt_password);
+        txtPassword.setSelectAllOnFocus(true);
 
-        Button btnLogin = (Button) v.findViewById(R.id.btn_login);
+        btnLogin = (Button) v.findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
         Button btnRegister = (Button) v.findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(this);

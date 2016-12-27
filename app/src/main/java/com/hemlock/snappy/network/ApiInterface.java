@@ -20,7 +20,7 @@ public interface ApiInterface {
     @GET("snappy/trackings/{trackingId}")
     Call<JSON_TrackingResult> showTracking(@Path("trackingId") String trackingId, @Query("access_token") String accessToken);
 
-    @GET("snappy/me")
+    @GET("snappy/users/me")
     Call<JSON_AuthResult> auth(@Query("access_token") String accessToken);
 
     @POST("users/login/password")
@@ -29,13 +29,13 @@ public interface ApiInterface {
             @Query("password") String password
     );
 
-    @POST("users/login/password")
+    @POST("snappy/users/login/password")
     Call<JSON_LoginResult> loginPhoneNumber(
             @Query("phone_number") String phoneNumber,
             @Query("password") String password
     );
 
-    @POST("users/login")
+    @POST("snappy/users/login")
     Call<JSON_LoginResult> loginFb(
             @Query("fbId") String fbId,
             @Query("accessToken") String accessToken
@@ -57,7 +57,7 @@ public interface ApiInterface {
     @GET("snappy/management/trackings/trackings_by_mailman_shipping")
     Call<JSON_ListTrackingResult> getCurrentShippingTracking(@Query("access_token") String accessToken);
 
-    @POST("users")
+    @POST("snappy/users")
     Call<JSON_LoginResult> register(
             @Query("name") String name,
             @Query("phone_number") String phoneNumber,
@@ -65,7 +65,7 @@ public interface ApiInterface {
             @Query("password") String password
     );
 
-    @POST("me")
+    @POST("snappy/users/me")
     Call<JSON_CommonResult> changePassword(
             @Query("access_token") String accessToken,
             @Query("current_password") String currentPassword,

@@ -77,12 +77,17 @@ public class TrackingListFragment extends BaseFragment implements TrackingListAd
             @Override
             public void onResponse(Call<JSON_ListTrackingResult> call, Response<JSON_ListTrackingResult> response) {
                 stopLoading();
-                trackings = response.body().getTrackings();
-                if (trackings.size() > 0) {
-                    TrackingListAdapter adapter = new TrackingListAdapter(trackings, TrackingListFragment.this);
-                    rcvTrackings.setAdapter(adapter);
+                if (response != null && response.body() != null) {
+                    trackings = response.body().getTrackings();
+                    if (trackings.size() > 0) {
+                        TrackingListAdapter adapter = new TrackingListAdapter(trackings, TrackingListFragment.this);
+                        rcvTrackings.setAdapter(adapter);
+                    } else {
+                        tvNoResult.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    tvNoResult.setVisibility(View.VISIBLE);
+                    removeAllInBackStack();
+                    replaceFragment(new LoginFragment(), false);
                 }
             }
 
