@@ -148,7 +148,8 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
                                     Log.w(getClass().getSimpleName(), t.toString());
                                 }
                             });
-                        }
+                        } else
+                            Toast.makeText(getActivity(), R.string.get_fb_info_error, Toast.LENGTH_LONG).show();
                     }
                 });
                 Bundle parameters = new Bundle();

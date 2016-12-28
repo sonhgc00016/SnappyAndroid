@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Snappy</string>
-    <string name="facebook_app_id">127055394450183</string>
+    <!--fbId dev, remember change BASE_URL in ApiClient.java, too-->
+    <!--<string name="facebook_app_id">657038454466118</string>-->
+    <!--fbId prod, remember change BASE_URL in ApiClient.java, too-->
+    <string name="facebook_app_id">1796589060623403</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -84,4 +87,5 @@
     <string name="setting">Cài đặt</string>
     <string name="submit">Duyệt</string>
     <string name="error">Lỗi</string>
+    <string name="get_fb_info_error">Đã có lỗi khi lấy thông tin từ tài khoản Facebook của bạn. Vui lòng kiểm tra lại thông tin va thử lại sau</string>
 </resources>

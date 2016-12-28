@@ -12,10 +12,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiClient {
-    private static final String BASE_URL = "http://192.168.1.225:4000/api/v1/";
-//    private static final String BASE_URL = "https://pages.fm/api/v1/";
-    private static Retrofit retrofit = null;
+//    base link api dev, remember change facebook_app_id in string.xml, too
+//    private static final String BASE_URL = "http://192.168.1.225:4000/api/v1/";local
+//    base link api prod, remember change facebook_app_id in string.xml, too
+    private static final String BASE_URL = "https://pages.fm/api/v1/";
 
+    private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
         if (retrofit == null) {
